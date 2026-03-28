@@ -25,21 +25,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        ruby: ["3.3", "3.4"]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0 # for posts's lastmod
-
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ matrix.ruby }}
-          bundler-cache: true
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -49,5 +39,22 @@ jobs:
       - name: Build Assets
         run: npm i && npm run build
 
+      - name: Build Site
+        uses: JekyllNet/action@v1
+        with:
+          source: .
+          destination: _site
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+
+      - name: Install html-proofer
+        run: gem install html-proofer -v "~> 5.0"
+
       - name: Test Site
-        run: bash tools/test.sh
+        run: |
+          htmlproofer _site \
+            --disable-external \
+            --ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/"
