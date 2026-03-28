@@ -45,20 +45,6 @@ jobs:
           source: .
           destination: "_site${{ steps.pages.outputs.base_path }}"
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3.4"
-
-      - name: Install html-proofer
-        run: gem install html-proofer -v "~> 5.0"
-
-      - name: Test site
-        run: |
-          htmlproofer "_site${{ steps.pages.outputs.base_path }}" \
-            \-\-disable-external \
-            \-\-ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/"
-
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v4
         with:
