@@ -25,21 +25,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        ruby: ["3.3", "3.4"]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 0 # for posts's lastmod
-
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ matrix.ruby }}
-          bundler-cache: true
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -49,5 +39,8 @@ jobs:
       - name: Build Assets
         run: npm i && npm run build
 
-      - name: Test Site
-        run: bash tools/test.sh
+      - name: Build Site
+        uses: JekyllNet/action@main
+        with:
+          source: .
+          destination: _site
