@@ -39,7 +39,7 @@ jobs:
       - name: Build Assets
         run: npm i && npm run build
 
-      - name: Build Site
+      - name: Build Site  JekyllNet
         uses: JekyllNet/action@main
         with:
           source: .
