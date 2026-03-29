@@ -40,7 +40,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Build site
-        uses: JekyllNet/action@v2
+        uses: JekyllNet/action@v2.5
         with:
           source: .
           destination: "_site${{ steps.pages.outputs.base_path }}"

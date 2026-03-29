@@ -32,7 +32,7 @@ jobs:
         run: npm i && npm run build
 
       - name: Build Site with JekyllNet
-        uses: JekyllNet/action@v2
+        uses: JekyllNet/action@v2.5
         with:
           source: .
           destination: _site
